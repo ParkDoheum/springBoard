@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doheum.board.BoardMapper">
+	<select id="getBoardList" resultType="BoardVO">
+	    SELECT * FROM t_board
+	</select>
+	
+	<select id="getBoardDetail" resultType="BoardVO" parameterType="BoardVO">
+	    SELECT * FROM t_board WHERE i_board = #{i_board}
+	</select>
+		
+	<insert id="insertBoard" parameterType="BoardVO">
+	     <selectKey keyProperty="i_board" resultType="int" order="BEFORE">
+		    select seq_board.nextVal FROM DUAL
+		 </selectKey>
+	    INSERT INTO t_board
+	    (i_board, t_title, t_content)
+	    VALUES
+	    (#{i_board}, #{t_title}, #{t_content}) 
+	</insert>
+	
+	<update id="updBoardCnt" parameterType="BoardVO">
+	    UPDATE t_board
+	    SET cnt = cnt + 1
+	    , ip_addr = #{ip_addr}
+	    WHERE i_board = #{i_board}
+	    AND (ip_addr is null OR ip_addr != #{ip_addr})	    
+	</update>
+	
+</mapper>
