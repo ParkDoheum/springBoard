@@ -27,6 +27,13 @@ public class BoardController {
 	public String writeGet() {
 		return "write";
 	}
+
+	@RequestMapping("mod.do")
+	public String modGet(Model model, @RequestParam int i_board) {
+		BoardVO vo = service.detailGet(i_board);
+		model.addAttribute("detail", vo);
+		return "write";
+	}
 	
 	@RequestMapping(value="write.do", method=RequestMethod.POST)
 	public String writePost(BoardVO vo) {

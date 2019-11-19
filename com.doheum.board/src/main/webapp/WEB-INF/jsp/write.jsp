@@ -7,8 +7,8 @@
 </head>
 <body>
 	<form action="write.do" method="post">
-		<div>제목 : <input type="text" name="t_title"></div>
-		<div>내용 : <textarea name="t_content" rows="14" cols="5"></textarea></div>
+		<div>제목 : <input type="text" name="t_title" value="${detail.t_title}"></div>
+		<div>내용 : <textarea name="t_content" rows="14" cols="5">${detail.t_content }</textarea></div>
 		<div>
 			<input type="submit" value="등록">
 			<input type="reset" value="다시쓰기">
