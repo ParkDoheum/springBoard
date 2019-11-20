@@ -32,8 +32,8 @@ public class BoardController {
 
 	@RequestMapping("mod.do")
 	public String modGet(Model model, @RequestParam int i_board) {
-		BoardVO vo = service.detailGet(i_board);
-		model.addAttribute("detail", vo);
+		BoardDetailDomain vo = service.detailGet(i_board);
+		model.addAttribute("detail", vo.getVo());
 		model.addAttribute("action", "mod.do");
 		return "write";
 	}
@@ -42,7 +42,9 @@ public class BoardController {
 	public String writePost(BoardVO vo) {
 		System.out.println("t_title : " + vo.getT_title());
 		System.out.println("t_content : " + vo.getT_content());		
-		service.insertBoard(vo);		
+		service.insertBoard(vo);	
+		
+		
 		return "redirect:detail.do?i_board=" + vo.getI_board();
 	}
 	
@@ -60,10 +62,11 @@ public class BoardController {
 		
 		System.out.println("i_board : " + i_board);
 		
-		BoardVO vo = service.detailGet(i_board);
-		System.out.println("vo - content : " + vo.getT_content());
+		BoardDetailDomain domain = service.detailGet(i_board);
 		
-		model.addAttribute("detail", vo);
+		domain.setPrevIboard(2);
+		
+		model.addAttribute("detail", domain);
 		
 		return "detail";
 	}

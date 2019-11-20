@@ -4,7 +4,7 @@
 
 <mapper namespace="com.doheum.board.BoardMapper">
 	<select id="getBoardList" resultType="BoardVO">
-	    SELECT * FROM t_board ORDER BY i_board DESC
+	    SELECT * FROM t_board ORDER BY grp DESC, seq ASC
 	</select>
 	
 	<select id="getBoardDetail" resultType="BoardVO" parameterType="BoardVO">
@@ -14,6 +14,16 @@
 	<select id="getBoardPk" resultType="int">
 		    SELECT seq_board.nextVal FROM DUAL
  	</select>
+ 	
+	<select id="getPrevIboard" parameterType="BoardVO" resultType="Integer">
+	    SELECT nvl(min(i_board), 0) FROM t_board 
+		WHERE i_board  <![CDATA[ >  ]]> #{i_board} and seq = 0
+	</select>
+	
+	<select id="getNextIboard" parameterType="BoardVO" resultType="Integer">
+	     SELECT nvl(max(i_board), 0) FROM t_board 
+		WHERE i_board  <![CDATA[ <  ]]> #{i_board} and seq = 0
+	</select>
 	
 	<insert id="insertBoard" parameterType="BoardVO">	
 	    INSERT INTO t_board
@@ -21,6 +31,13 @@
 	    VALUES
 	    (#{i_board}, #{grp}, #{seq}, #{floor}, #{t_title}, #{t_content}) 
 	</insert>
+	
+	<update id="updBoardSeq" parameterType="BoardVO">
+	    UPDATE t_board
+		SET seq = seq + 1 
+		WHERE grp = #{grp}
+		and seq >= #{seq}
+	</update>
 	
 	<update id="updBoardCnt" parameterType="BoardVO">
 	    UPDATE t_board

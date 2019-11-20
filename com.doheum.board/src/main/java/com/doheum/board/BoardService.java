@@ -19,7 +19,7 @@ public class BoardService {
 		return mapper.getBoardList();
 	}
 	
-	public BoardVO detailGet(int i_board) {		
+	public BoardDetailDomain detailGet(int i_board) {		
 		 HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 	     String ip = req.getHeader("X-FORWARDED-FOR");
 	      if (ip == null) {
@@ -30,19 +30,37 @@ public class BoardService {
 	      param.setIp_addr(ip);
 		
 		mapper.updBoardCnt(param);
-		return mapper.getBoardDetail(param);
+		BoardVO resultVO =  mapper.getBoardDetail(param);
+		
+		BoardDetailDomain returnVO = new BoardDetailDomain();
+		returnVO.setVo(resultVO);
+		
+		//이전글 i_board값 가져오기
+		int prevIboard = mapper.getPrevIboard(param);
+		returnVO.setPrevIboard(prevIboard);
+		
+		//다음글 i_board값 가져오기
+		int nextIboard = mapper.getNextIboard(param);
+		returnVO.setNextIboard(nextIboard);
+				
+		return returnVO;
 	}
 	
 	public void insertBoard(BoardVO vo) {
 		
 		int i_board = mapper.getBoardPk();
 		
-		if(vo.getI_board() == 0) { //본글
+		if(vo.getGrp() == 0) { //본글
 			vo.setI_board(i_board);
 			vo.setGrp(i_board);
 			
-		} else { //답글
+		} else { //답글		
+			vo.setI_board(i_board);
+			vo.setSeq(vo.getSeq() + 1);
+			vo.setFloor(vo.getFloor() + 1);
 			
+			System.out.println("vo.getSeq() : " + vo.getSeq());
+			mapper.updBoardSeq(vo);
 		}
 		
 		mapper.insertBoard(vo);

@@ -29,7 +29,11 @@
 		<c:forEach var="item" items="${list}">
 		<tr class="pointer" onclick="moveToDetail(${item.i_board})">
 			<td>${item.i_board }</td>
-			<td>${item.t_title }</td>
+			<td>
+				<c:forEach var="i" begin="1" end="${item.floor}">&nbsp;&nbsp;</c:forEach>
+				<c:if test="${item.seq != 0}">┗	</c:if>
+				${item.t_title }
+			</td>
 			<td>${item.r_datetime }</td>
 			<td>${item.cnt }</td>
 		</tr>
