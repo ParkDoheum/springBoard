@@ -4,21 +4,22 @@
 
 <mapper namespace="com.doheum.board.BoardMapper">
 	<select id="getBoardList" resultType="BoardVO">
-	    SELECT * FROM t_board
+	    SELECT * FROM t_board ORDER BY i_board DESC
 	</select>
 	
 	<select id="getBoardDetail" resultType="BoardVO" parameterType="BoardVO">
 	    SELECT * FROM t_board WHERE i_board = #{i_board}
 	</select>
 		
-	<insert id="insertBoard" parameterType="BoardVO">
-	     <selectKey keyProperty="i_board" resultType="int" order="BEFORE">
-		    select seq_board.nextVal FROM DUAL
-		 </selectKey>
+	<select id="getBoardPk" resultType="int">
+		    SELECT seq_board.nextVal FROM DUAL
+ 	</select>
+	
+	<insert id="insertBoard" parameterType="BoardVO">	
 	    INSERT INTO t_board
-	    (i_board, t_title, t_content)
+	    (i_board, grp, seq, floor, t_title, t_content)
 	    VALUES
-	    (#{i_board}, #{t_title}, #{t_content}) 
+	    (#{i_board}, #{grp}, #{seq}, #{floor}, #{t_title}, #{t_content}) 
 	</insert>
 	
 	<update id="updBoardCnt" parameterType="BoardVO">

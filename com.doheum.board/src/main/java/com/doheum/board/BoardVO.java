@@ -2,12 +2,33 @@ package com.doheum.board;
 
 public class BoardVO {
 	private int i_board;
+	private int grp;
+	private int seq;
+	private int floor;
 	private String t_title;
 	private String t_content;
 	private String r_datetime;
 	private int cnt;
 	private String ip_addr;
-	
+		
+	public int getGrp() {
+		return grp;
+	}
+	public void setGrp(int grp) {
+		this.grp = grp;
+	}
+	public int getSeq() {
+		return seq;
+	}
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+	public int getFloor() {
+		return floor;
+	}
+	public void setFloor(int floor) {
+		this.floor = floor;
+	}
 	public String getIp_addr() {
 		return ip_addr;
 	}

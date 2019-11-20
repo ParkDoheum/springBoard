@@ -34,6 +34,22 @@ public class BoardService {
 	}
 	
 	public void insertBoard(BoardVO vo) {
+		
+		int i_board = mapper.getBoardPk();
+		
+		if(vo.getI_board() == 0) { //본글
+			vo.setI_board(i_board);
+			vo.setGrp(i_board);
+			
+		} else { //답글
+			
+		}
+		
 		mapper.insertBoard(vo);
+		
+	}
+	
+	public void updateBoard(BoardVO vo) {
+		mapper.updateBoard(vo);
 	}
 }

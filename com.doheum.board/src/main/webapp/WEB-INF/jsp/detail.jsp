@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%
+	
+
+%>    
  <!DOCTYPE html>
 <html>
 <head>
@@ -14,8 +18,16 @@
 	<div>${detail.t_content }</div>
 	<div>작성일 : ${detail.r_datetime }</div>
 	<div>
-		<a href=""><button>수정</button></a>
+		<a href="mod.do?i_board=${detail.i_board }"><button>수정</button></a>
 		<a href=""><button>삭제</button></a>
+		<a href="write.do?grp=${detail.grp}&seq=${detail.seq}&floor=${detail.floor}"><button>답글달기!!</button></a>
 	</div>
 </body>
 </html>
+
+
+
+
+
+
+
